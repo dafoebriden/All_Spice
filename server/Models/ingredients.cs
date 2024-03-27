@@ -1,6 +1,6 @@
 namespace All_Spice.Models
 {
-    public class Ingredients : IdAndTime
+    public class Ingredient : IdAndTime
     {
         public string Name { get; set; }
         public string Quantity { get; set; }
