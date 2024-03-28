@@ -33,64 +33,49 @@ public class RecipesController : ControllerBase
     }
 
     //NOTE Getting all recipes
-    // [HttpGet]
-    // public ActionResult<List<Recipe>> Get()
-    // {
-    //     try
-    //     {
-    //         List<Recipe> recipes = _recipesService.Get();
-    //         return Ok(recipes);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(e.Message);
-    //     }
-    // }
+    [HttpGet]
+    public ActionResult<List<Recipe>> Get()
+    {
+        try
+        {
+            List<Recipe> recipes = _recipesService.Get();
+            return Ok(recipes);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
     //NOTE Getting a recipe by its Id
-    // [HttpGet("{recipeId}")]
-    // public ActionResult<Recipe> GetById(int recipeId)
-    // {
-    //     try
-    //     {
-    //         Recipe recipe = _recipesService.GetById(recipeId);
-    //         return Ok(recipe);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(e.Message);
-    //     }
-    // }
+    [HttpGet("{recipeId}")]
+    public ActionResult<Recipe> GetById(int recipeId)
+    {
+        try
+        {
+            Recipe recipe = _recipesService.GetById(recipeId);
+            return Ok(recipe);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
     //NOTE Deleting a recipe by its Id
-    // [HttpDelete("{recipeId}")]
-    // [Authorize]
-    // public async Task<ActionResult<string>> DeleteById(int recipeId)
-    // {
-    //     try
-    //     {
-    //         Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-    //         await _recipesService.DeleteById(recipeId, userInfo.Id);
-    //         return Ok($"Deleted recipe: {recipeId}");
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(e.Message);
-    //     }
-    // }
-
-    //NOTE getting ingredients for a recipe
-    // [HttpGet("{recipeId}/ingredients")]
-    // public ActionResult<List<Ingredient>> GetIngredients(int recipeId)
-    // {
-    //     try
-    //     {
-    //         List<Ingredient> ingredients = _ingredientsService.GetIngredients(recipeId);
-    //         return Ok(ingredients);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(e.Message);
-    //     }
-    // }
+    [HttpDelete("{recipeId}")]
+    [Authorize]
+    public async Task<ActionResult<string>> DeleteById(int recipeId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            _recipesService.Delete(recipeId, userInfo.Id);
+            return Ok($"Deleted recipe: {recipeId}");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

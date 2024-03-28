@@ -6,6 +6,7 @@ namespace All_Spice.Models
         public int Instructions { get; set; }
         public string Image { get; set; }
         public string Category { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
     }
 
 }

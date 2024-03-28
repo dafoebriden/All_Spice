@@ -6,5 +6,6 @@ namespace All_Spice.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string CreatorId { get; set; }
+        public Account Creator { get; set; }
     }
 }

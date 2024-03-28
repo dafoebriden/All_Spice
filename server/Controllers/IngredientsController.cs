@@ -63,12 +63,12 @@ public class IngredientsController : ControllerBase
     //NOTE Deleting a Ingredient by its Id
     [HttpDelete("{IngredientId}")]
     [Authorize]
-    public async Task<ActionResult<string>> DeleteById(int ingredientId)
+    public async Task<ActionResult<string>> Delete(int ingredientId)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            await _ingredientsService.DeleteById(ingredientId, userInfo.Id);
+            _ingredientsService.Delete(ingredientId, userInfo.Id);
             return Ok($"Deleted Ingredient: {ingredientId}");
         }
         catch (Exception e)

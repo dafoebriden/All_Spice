@@ -29,4 +29,10 @@ CREATE TABLE IF NOT EXISTS ingredients(
   FOREIGN KEY (recipeId) REFERENCES recipes(id),
   FOREIGN KEY (creatorId) REFERENCES accounts(id)
 );
+INSERT INTO 
+recipes(title, instructions, image, category, creatorId) 
+VALUES(Title, Instructions, Image, Category, CreatorId) 
 
+
+DELETE * IN recipes recipe
+WHERE recipe.id = id

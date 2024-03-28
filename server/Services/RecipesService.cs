@@ -7,23 +7,36 @@ public class RecipesService
     {
         _repository = repository;
     }
-    internal Recipe Create(Recipe RecipeData)
+
+    // NOTE Creating recipe
+    internal Recipe Create(Recipe recipeData)
     {
-        Recipe Recipe = _repository.Create(RecipeData);
-        return Recipe;
+        Recipe recipe = _repository.Create(recipeData);
+        return recipe;
     }
+
+    // NOTE Getting all recipes
     internal List<Recipe> Get()
     {
-        List<Recipe> Recipes = _repository.Get();
-        return Recipes;
+        List<Recipe> recipes = _repository.Get();
+        return recipes;
     }
-    internal Recipe Delete(int RecipeId, string userId)
+
+    // NOTE Getting one recipe by its Id
+    internal Recipe GetById(int recipeId)
     {
-        Recipe RecipeToDelete = _repository.GetRecipeById(RecipeId);
+        Recipe recipe = _repository.GetById(recipeId) ?? throw new Exception($"There is no recipe with the the id: {recipeId}");
+        return recipe;
+    }
+
+    // NOTE Deleting recipe by Id
+    internal void Delete(int recipeId, string userId)
+    {
+        Recipe RecipeToDelete = _repository.GetById(recipeId);
         if (RecipeToDelete.CreatorId != userId)
         {
             throw new Exception("You do not have authorization to delete this Recipe");
         }
-        _repository.Delete(RecipeId);
+        _repository.Delete(recipeId);
     }
 }
