@@ -29,6 +29,21 @@ public class RecipesService
         return recipe;
     }
 
+    //NOTE Editing recipe by Id
+    internal Recipe Edit(int recipeId, string userId, Recipe recipeData)
+    {
+        Recipe recipeToUpdate = GetById(recipeId);
+        if (recipeToUpdate.CreatorId != userId)
+        {
+            throw new Exception("That recipe does not belong to you. Give it back you thief!");
+        }
+        recipeToUpdate.Title = recipeData.Title ?? recipeToUpdate.Title;
+        recipeToUpdate.Instructions = recipeData.Instructions ?? recipeToUpdate.Instructions;
+        recipeToUpdate.Img = recipeData.Img ?? recipeToUpdate.Img;
+        recipeToUpdate.Category = recipeData.Category ?? recipeToUpdate.Category;
+        Recipe recipe = _repository.Edit(recipeToUpdate);
+        return recipe;
+    }
     // NOTE Deleting recipe by Id
     internal void Delete(int recipeId, string userId)
     {

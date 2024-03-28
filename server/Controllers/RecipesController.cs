@@ -1,7 +1,7 @@
 namespace All_Spice.Controllers;
 
 [ApiController]
-[Route("api[controller]")]
+[Route("api/[controller]")]
 public class RecipesController : ControllerBase
 {
     private readonly RecipesService _recipesService;
@@ -55,6 +55,23 @@ public class RecipesController : ControllerBase
         {
             Recipe recipe = _recipesService.GetById(recipeId);
             return Ok(recipe);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    // NOTE Updating a recipe by its Id
+    [HttpPut("{recipeId}")]
+    [Authorize]
+    public async Task<ActionResult<Recipe>> Edit(int recipeId, [FromBody] Recipe recipeData)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Recipe recipe = _recipesService.Edit(recipeId, userInfo.Id, recipeData);
+            return recipe;
         }
         catch (Exception e)
         {

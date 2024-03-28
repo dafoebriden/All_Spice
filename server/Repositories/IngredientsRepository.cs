@@ -11,7 +11,13 @@ public class IngredientsRepository
         string sql = @"
         INSERT INTO
         ingredients(name, quantity, creatorId, recipeId)
-        VALUES(@Name, @Quantity, @CreatorId, @RecipeId);";
+        VALUES(@Name, @Quantity, @CreatorId, @RecipeId);
+
+        SELECT ingredient.*,
+        account.*
+        FROM ingredients ingredient
+        JOIN accounts account ON ingredient.creatorId = account.id
+        WHERE ingredient.id = LAST_INSERT_ID();";
         Ingredient ingredient = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
         {
             ingredient.Creator = account;

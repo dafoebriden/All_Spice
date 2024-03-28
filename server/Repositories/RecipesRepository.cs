@@ -13,14 +13,14 @@ public class RecipesRepository
     {
         string sql = @"
         INSERT INTO 
-        recipes(title, instructions, image, category, creatorId) 
-        VALUES(@Title, @Instructions, @Image, @Category, @CreatorId);
+        recipes(title, instructions, img, category, creatorId) 
+        VALUES(@Title, @Instructions, @Img, @Category, @CreatorId);
 
         SELECT recipe.*,
         account.*
         FROM recipes recipe
         JOIN accounts account On recipe.creatorId = account.id
-        WHERE recipe.id = LAST_INSERTED_ID();";
+        WHERE recipe.id = LAST_INSERT_ID();";
         Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
         {
             recipe.Creator = account;
@@ -33,7 +33,7 @@ public class RecipesRepository
         string sql = @"
         SELECT
         recipe.*,
-        account*
+        account.*
         FROM recipes recipe
         JOIN accounts account ON recipe.creatorId = account.id;";
 
@@ -47,19 +47,34 @@ public class RecipesRepository
     internal Recipe GetById(int recipeId)
     {
         string sql = @"
-        SELECT recipe.*,
-        ingredient.*,
+        SELECT 
+        recipe.*,
         account.*
         FROM recipes recipe
-        JOIN ingredients ingredient ON ingredient.recipeId = recipe.id AND accounts account ON recipe.creatorId = account.id 
-        WHERE recipe.id = @recipeId LIMIT 1
-        ;";
-        Recipe recipe = _db.Query<Recipe, List<Ingredient>, Account, Recipe>(sql, (recipe, ingredients, account) =>
+        JOIN accounts account ON recipe.creatorId = account.id 
+        WHERE recipe.id = @recipeId;";
+        Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
         {
             recipe.Creator = account;
-            recipe.Ingredients = ingredients;
             return recipe;
         }, new { recipeId }).FirstOrDefault();
+        return recipe;
+
+    }
+    internal Recipe Edit(Recipe recipeToUpdate)
+    {
+        string sql = @"
+        UPDATE recipes
+        SET
+        title = @Title,
+        instructions = @Instructions,
+        img = @Img,
+        category = @Category
+        WHERE id = @Id
+        LIMIT 1;
+        
+        SELECT * FROM recipes WHERE id = @Id";
+        Recipe recipe = _db.Query<Recipe>(sql, recipeToUpdate).FirstOrDefault();
         return recipe;
     }
     internal void Delete(int id)
@@ -67,7 +82,6 @@ public class RecipesRepository
         string sql = @"
         DELETE * IN recipes recipe
         WHERE recipe.id = @id
-        CASCADE
         ;";
         _db.Query<Recipe>(sql, id);
     }

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS recipes(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   title VARCHAR(50) NOT NULL,
   instructions VARCHAR(500) NOT NULL,
-  image VARCHAR(500) NOT NULL,
+  img VARCHAR(500) NOT NULL,
   category VARCHAR(25) NOT NULL,
   creatorId VARCHAR(255),
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
@@ -41,3 +41,24 @@ VALUES(@Name, @Quantity, @CreatorId, @RecipeId)
 DROP TABLE recipes
 
 DROP TABLE ingredients
+
+
+        INSERT INTO recipes(title, instructions, image, category, creatorId)
+        VALUES('burrito', 'fill tortilla with ingredients', 'httpslkdfj', 'mexican', '65e8d4d1de0c8eeb42af624d' );
+
+
+        SELECT 
+        recipe.*,
+        account.*
+        FROM recipes recipe
+        JOIN accounts account On recipe.creatorId = account.id
+        WHERE recipe.id = LAST_INSERT_ID();
+
+
+        SELECT
+        recipe.*,
+        account*
+        FROM recipes recipe
+        JOIN accounts account ON recipe.creatorId = account.id;
+
+

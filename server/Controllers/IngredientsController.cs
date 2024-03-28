@@ -1,7 +1,7 @@
 namespace All_Spice.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class IngredientsController : ControllerBase
 {
     private readonly IngredientsService _ingredientsService;
