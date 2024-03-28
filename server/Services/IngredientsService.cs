@@ -16,12 +16,6 @@ public class IngredientsService
         return ingredient;
     }
 
-    // NOTE Getting all ingredients
-    internal List<Ingredient> Get()
-    {
-        List<Ingredient> ingredients = _repository.Get();
-        return ingredients;
-    }
 
     // NOTE Getting ingredient by Id
     internal Ingredient GetById(int ingredientId)
@@ -31,9 +25,9 @@ public class IngredientsService
     }
 
     // NOTE Deleting Ingredient
-    internal Ingredient Delete(int ingredientId, string userId)
+    internal void Delete(int ingredientId, string userId)
     {
-        Ingredient ingredientToDelete = _repository.GetById(IngredientId);
+        Ingredient ingredientToDelete = _repository.GetById(ingredientId);
         if (ingredientToDelete.CreatorId != userId)
         {
             throw new Exception("You do not have authorization to delete this ingredient");

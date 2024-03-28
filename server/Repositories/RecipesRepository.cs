@@ -48,14 +48,16 @@ public class RecipesRepository
     {
         string sql = @"
         SELECT recipe.*,
+        ingredient.*,
         account.*
         FROM recipes recipe
-        JOIN accounts account ON recipe.creatorId = account.id
-        WHERE recipe.id = @recipeId
+        JOIN ingredients ingredient ON ingredient.recipeId = recipe.id AND accounts account ON recipe.creatorId = account.id 
+        WHERE recipe.id = @recipeId LIMIT 1
         ;";
-        Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+        Recipe recipe = _db.Query<Recipe, List<Ingredient>, Account, Recipe>(sql, (recipe, ingredients, account) =>
         {
             recipe.Creator = account;
+            recipe.Ingredients = ingredients;
             return recipe;
         }, new { recipeId }).FirstOrDefault();
         return recipe;
@@ -65,6 +67,7 @@ public class RecipesRepository
         string sql = @"
         DELETE * IN recipes recipe
         WHERE recipe.id = @id
+        CASCADE
         ;";
         _db.Query<Recipe>(sql, id);
     }

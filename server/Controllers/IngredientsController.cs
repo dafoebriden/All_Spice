@@ -30,21 +30,6 @@ public class IngredientsController : ControllerBase
         }
     }
 
-    //NOTE Getting all Ingredients
-    [HttpGet]
-    public ActionResult<List<Ingredient>> Get()
-    {
-        try
-        {
-            List<Ingredient> ingredients = _ingredientsService.Get();
-            return Ok(ingredients);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-
     //NOTE Getting a Ingredient by its Id
     [HttpGet("{IngredientId}")]
     public ActionResult<Ingredient> GetById(int ingredientId)
