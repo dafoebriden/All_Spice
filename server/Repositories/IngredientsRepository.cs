@@ -26,6 +26,25 @@ public class IngredientsRepository
         return ingredient;
     }
 
+    // NOTE Getting an ingredients by recipeId
+    internal List<Ingredient> GetIngredients(int recipeId)
+    {
+        string sql = @"
+        SELECT 
+        ingredient.*,
+        account.*
+        FROM ingredients ingredient
+        JOIN accounts account ON ingredient.creatorId = account.id
+        WHERE ingredient.recipeId = @recipeId;";
+
+        List<Ingredient> ingredients = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
+        {
+            ingredient.Creator = account;
+            return ingredient;
+        }, new { recipeId }).ToList();
+        return ingredients;
+    }
+
     // NOTE Getting an ingredient by its Id
     internal Ingredient GetById(int ingredientId)
     {

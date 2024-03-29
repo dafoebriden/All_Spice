@@ -61,6 +61,20 @@ public class RecipesController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+    // NOTE Getting ingredients by a recipe Id
+    [HttpGet("{recipeId}/ingredients")]
+    public ActionResult<List<Ingredient>> GetIngredients(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetIngredients(recipeId);
+            return ingredients;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
     // NOTE Updating a recipe by its Id
     [HttpPut("{recipeId}")]

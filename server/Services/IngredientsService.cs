@@ -24,6 +24,13 @@ public class IngredientsService
         return ingredients;
     }
 
+    // NOTE Getting ingredients by recipeId
+    internal List<Ingredient> GetIngredients(int recipeId)
+    {
+        List<Ingredient> ingredients = _repository.GetIngredients(recipeId);
+        return ingredients;
+    }
+
     // NOTE Deleting Ingredient
     internal void Delete(int ingredientId, string userId)
     {

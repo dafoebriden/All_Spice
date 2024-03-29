@@ -61,4 +61,10 @@ DROP TABLE ingredients
         FROM recipes recipe
         JOIN accounts account ON recipe.creatorId = account.id;
 
-
+SELECT 
+        ingredient.*,
+        account.*
+        FROM ingredients ingredient
+        JOIN accounts account ON ingredient.creatorId = account.id
+        WHERE ingredient.recipeId = 41;
+        

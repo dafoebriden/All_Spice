@@ -32,7 +32,7 @@ public class RecipesService
     //NOTE Editing recipe by Id
     internal Recipe Edit(int recipeId, string userId, Recipe recipeData)
     {
-        Recipe recipeToUpdate = GetById(recipeId);
+        Recipe recipeToUpdate = _repository.GetById(recipeId) ?? throw new Exception($"There is no recipe with the the id: {recipeId}");
         if (recipeToUpdate.CreatorId != userId)
         {
             throw new Exception("That recipe does not belong to you. Give it back you thief!");
