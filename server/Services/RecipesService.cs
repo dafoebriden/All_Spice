@@ -47,7 +47,7 @@ public class RecipesService
     // NOTE Deleting recipe by Id
     internal void Delete(int recipeId, string userId)
     {
-        Recipe RecipeToDelete = _repository.GetById(recipeId);
+        Recipe RecipeToDelete = GetById(recipeId);
         if (RecipeToDelete.CreatorId != userId)
         {
             throw new Exception("You do not have authorization to delete this Recipe");

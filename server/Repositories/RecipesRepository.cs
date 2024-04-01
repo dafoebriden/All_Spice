@@ -77,12 +77,12 @@ public class RecipesRepository
         Recipe recipe = _db.Query<Recipe>(sql, recipeToUpdate).FirstOrDefault();
         return recipe;
     }
-    internal void Delete(int id)
+    internal void Delete(int Id)
     {
         string sql = @"
-        DELETE * IN recipes recipe
-        WHERE recipe.id = @id
-        ;";
-        _db.Query<Recipe>(sql, id);
+        DELETE * IN recipes 
+        WHERE id = @Id
+        LIMIT 1;";
+        _db.Query(sql, new { Id });
     }
 }
