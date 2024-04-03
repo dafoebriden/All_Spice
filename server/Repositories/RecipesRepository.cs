@@ -80,7 +80,7 @@ public class RecipesRepository
     internal void Delete(int Id)
     {
         string sql = @"
-        DELETE * IN recipes 
+        DELETE FROM recipes 
         WHERE id = @Id
         LIMIT 1;";
         _db.Query(sql, new { Id });

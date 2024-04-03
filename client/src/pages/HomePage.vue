@@ -19,7 +19,7 @@
 
 
 
-  <!-- Modal -->
+  <!-- NOTE Modal -->
   <div class="modal fade" id="activeRecipe" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="activeRecipeLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl ">
@@ -33,13 +33,13 @@
               <div class="col-12 d-flex justify-content-end">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="col-12 d-flex align-items-center">
-                <h1 class=" m-0">{{ recipe.title }}</h1>
-                <p class="ms-2 recipe-title rounded-pill">{{ recipe.category }}</p>
+              <div class="col-12 d-flex align-items-center mb-3">
+                <h1 class="m-0 ms-2">{{ recipe.title }}</h1>
+                <p class="ms-2  recipe-title rounded-pill">{{ recipe.category }}</p>
               </div>
             </div>
-            <div class="p-0 d-flex">
-              <div class="col-6 p-3">
+            <div class="p-0 d-flex justify-content-center justify-content-md-evenly flex-wrap">
+              <div class="col-11 col-lg-5 mb-3">
                 <div class="recipe-card">
                   <div class="recipe-card-header">
                     <h2 class="m-0">Instructions</h2>
@@ -49,19 +49,20 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 p-3">
+              <div class="col-11 col-lg-5">
                 <div class="recipe-card">
                   <div class="recipe-card-header">
-                    <h2 class="m-0">Ingredients</h2>
+                    <h2 class="m-0 text-align-center">Ingredients <span class="add-button" role="button">+</span>
+                    </h2>
                   </div>
                   <div class="recipe-card-body">
                     <p v-for="ingredient in ingredients" :key="ingredient.id" class="m-0">{{ ingredient.quantity }} {{
         ingredient.name }}</p>
                   </div>
                 </div>
-
               </div>
             </div>
+
             <div class="col-12">
               <p class="mb-1 text-end">published by: {{ recipe.creator.name }}</p>
             </div>
@@ -157,27 +158,50 @@ export default {
 
 .modal-recipe {
   min-height: 600px;
-  display: flex;
   padding: 0px;
 }
 
 .modal-recipe-picture {
-  height: auto;
-  width: 40%;
+  height: 300px;
+  width: 100%;
   display: flex;
   justify-content: end;
   background-size: cover;
   background-position: center;
   border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
 .modal-recipe-content {
-  width: 61%;
-  display: flex;
+  width: 100%;
   flex-direction: column;
+
   justify-content: space-between;
   padding-left: 15px;
+}
+
+@media screen and (min-width: 1200px) {
+  .modal-recipe {
+    min-height: 600px;
+    display: flex;
+    padding: 0px;
+  }
+
+  .modal-recipe-picture {
+    height: auto;
+    width: 40%;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    border-top-right-radius: 0px;
+  }
+
+  .modal-recipe-content {
+    width: 61%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 15px;
+  }
 }
 
 .recipe-card {
@@ -194,5 +218,9 @@ export default {
 
 .recipe-card-body {
   padding: 5px;
+}
+
+.add-button {
+  text-shadow: 0px 0px 5px white;
 }
 </style>

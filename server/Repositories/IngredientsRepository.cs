@@ -60,17 +60,17 @@ public class IngredientsRepository
         {
             ingredient.Creator = account;
             return ingredient;
-        }, ingredientId).FirstOrDefault();
+        }, new { ingredientId }).FirstOrDefault();
         return ingredient;
     }
 
     // NOTE Deleting an ingredient
-    internal void Delete(int id)
+    internal void Delete(int Id)
     {
         string sql = @"
-        DELETE * FROM ingredients ingredient
-        WHERE ingredient.id = @id LIMIT 1
+        DELETE FROM ingredients
+        WHERE id = @Id LIMIT 1
         ;";
-        _db.Query(sql, id);
+        _db.Query(sql, new { Id });
     }
 }

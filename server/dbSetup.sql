@@ -29,6 +29,23 @@ CREATE TABLE IF NOT EXISTS ingredients(
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
   FOREIGN KEY (creatorId) REFERENCES accounts(id)
 );
+
+CREATE TABLE IF NOT EXISTS favorites(
+  id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'primary key',
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+  recipeId INT NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
+  FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE,
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
+  UNIQUE(recipeId, creatorId)
+);
+
+
+SELECT * FROM favorites
+
+DROP TABLE favorites
+
 INSERT INTO 
 recipes(title, instructions, image, category, creatorId) 
 VALUES(Title, Instructions, Image, Category, CreatorId) 
