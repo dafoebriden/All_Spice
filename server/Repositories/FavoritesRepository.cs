@@ -31,17 +31,18 @@ public class FavoritesRepository
     {
         string sql = @" 
         SELECT 
+        favorite.*,
         recipe.*,
-        account.*,
-        favorite.*
-        FROM recipes recipe
+        account.*
+        FROM favorites favorite
+        JOIN recipes recipe ON favorite.recipeId = recipe.id
         JOIN accounts account ON recipe.creatorId = account.id
-        WHERE recipe.id = favorite.RecipeId AND favorite.creatorId = @userId;";
+        WHERE recipe.id = favorite.recipeId AND favorite.creatorId = @userId;";
 
-        List<Recipe> recipes = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+        List<FavoriteRecipe> recipes = _db.Query<Favorite, FavoriteRecipe, Account, FavoriteRecipe>(sql, (favorite, recipe, userId) =>
         {
-            recipe.Creator = account;
-            return recipe;
+            favoriteRecipe.Creator = userId;
+            return favoriteRecipe;
         }, new { userId }).ToList();
         return recipes;
     }

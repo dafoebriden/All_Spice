@@ -1,8 +1,9 @@
 namespace All_Spice.Models
 {
-    public class Favorite : IdAndTime
+    public class Favorite : Recipe
     {
         public int RecipeId { get; set; }
+
     }
 
 }

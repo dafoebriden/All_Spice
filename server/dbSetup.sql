@@ -42,6 +42,17 @@ CREATE TABLE IF NOT EXISTS favorites(
 );
 
 
+SELECT 
+favorite.*,
+recipe.*,
+account.*
+FROM favorites favorite
+JOIN recipes recipe ON favorite.recipeId = recipe.id
+JOIN accounts account ON recipe.creatorId = account.id
+WHERE recipe.id = favorite.recipeId AND favorite.creatorId = '65e8d4d1de0c8eeb42af624d';
+
+
+
 SELECT * FROM favorites
 
 DROP TABLE favorites
